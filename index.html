@@ -5,8 +5,31 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Laura's Weather App</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="style.css"/>
+
 </head>
 <body>
-    
+    <h1>What Is the Weather today?</h1>
+    <section class="row">
+        <form class="col 3">
+            <label for="weatherLocation">Weather Location</label>
+            <input type="search" id="weatherLocation">
+            <input id="weatherSearch" type="submit" value="search">
+        </form>
+        <div class="col 9" id="weatherToday">
+            <h2 id="currentCity"></h2>
+        </div>
+    </section>
+    <section class="row">
+        <div class="col 3" id="cityHistory">
+        </div>
+        <div class="col 9" id="weather5DayForcast">
+
+        </div>
+    </section>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="script.js"></script>
 </body>
+
 </html>
