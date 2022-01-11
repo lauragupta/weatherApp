@@ -11,11 +11,25 @@ function searchWeatherInCity(event){
     }).then(function(response) {
         //add in JSON
         console.log(response)
+
+        myWeather = $("#weatherToday");
+        var today = moment().format("dddd, MMMM, D, YYYY");
+
+        //current weather conditions for that city
+        //current weather with the city name, the date, an icon representation of weather conditions, 
+        //the temperature, the humidity, the wind speed, and the UV index
+        var currentCity = $("<h2>").text(response.name);
+        var currentDate = $("<h3>").text(today);
+        var currentIcon = $("<img>").attr("src", "http://openweathermap.org/img/w/" + response.weather[0].icon + ".png");
+        var currentTemp = $("<h3>").text("Temperature: " + response.main.temp + "°F");
+        var currentHumidity = $("<p>").text("Humidity: " + response.main.humidity);
+        var currentWindSpeed = $("<p>").text("Wind Speed " + response.wind.speed + " MPH");
+        //var currentUVIndex = $()
+
+        myWeather.append(currentCity, currentDate, currentIcon, currentTemp, currentHumidity, currentWindSpeed);
     });
 }
 
-//current weather conditions for that city
-    //current weather with the city name, the date, an icon representation of weather conditions, the temperature, the humidity, the wind speed, and the UV index
     //the UV index color coded to indicate if conditions are favorable, moderate, or severe
 
         //store city information
