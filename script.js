@@ -100,15 +100,15 @@ function renderForecast(response) {
     var forecast = response.daily;
     $.each(forecast, function(i, day) {
         console.log(day);
-        var forecastIcon = $("<img>").attr("src", "http://openweathermap.org/img/w/" + response.daily[i].weather[0].icon + ".png");
-        var forecastTemp = $("<h5>").text("Temperature: " + response.daily[i].temp.day + "°F");
-        var forecastHumidity = $("<p>").text("Humidity: " + response.daily[i].humidity + "%");
-        var myForecast = $("#day" + i);
-        myForecast.append(forecastIcon, forecastTemp, forecastHumidity);
+        var forecastDate = moment.unix(response.daily[i].dt).format("MMM Do, YYYY");
+        var $forecastDate = $("<h4>").text(forecastDate);
+        var $forecastIcon = $("<img>").attr("src", "http://openweathermap.org/img/w/" + response.daily[i].weather[0].icon + ".png");
+        var $forecastTemp = $("<h5>").text("Temperature: " + response.daily[i].temp.day + "°F");
+        var $forecastHumidity = $("<p>").text("Humidity: " + response.daily[i].humidity + "%");
+        var $myForecast = $("#day" + i);
+        $myForecast.append($forecastDate, $forecastIcon, $forecastTemp, $forecastHumidity);
     })
     
-    //var forecastDate = 
-
 }
 
 //the UV index color coded to indicate if conditions are favorable, moderate, or severe
