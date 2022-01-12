@@ -13,6 +13,7 @@ function searchWeatherInCity(event){
     event.preventDefault();
     // run the search for weather with city name
     var inputCity = $("#weatherLocation").val().trim();
+    console.log(inputCity);
     getAndRenderCurrentWeather(inputCity);
     var storedCities = getCities();
     storedCities.unshift(inputCity);
@@ -36,7 +37,22 @@ function searchWeatherInCity(event){
      return storedCities;
  }
 
+ function searchCityAgain(event){
+    event.preventDefault();
+    var $clickedButton = $(event.target);
+    console.log($clickedButton);
+    var inputCity = $clickedButton[0].innerHTML;
+    console.log(inputCity);
+    getAndRenderCurrentWeather(inputCity);
+ }
+
 function getAndRenderCurrentWeather(inputCity) {
+    $("#weatherToday").empty();
+    $("#day0").empty();
+    $("#day1").empty();
+    $("#day2").empty();
+    $("#day3").empty();
+    $("#day4").empty();
     $.ajax({
         url: "https://api.openweathermap.org/data/2.5/weather?q=" + inputCity + "&appid=" + APIKey + "&units=imperial",
         method: "GET"
@@ -115,3 +131,4 @@ function colorUVIndex(currentUVIndex, myUVIndex) {
 
 
     //event listener for button
+    $("#cityHistory").on("click", searchCityAgain);
