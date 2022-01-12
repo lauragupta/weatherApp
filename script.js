@@ -45,14 +45,11 @@ function getUVAndForcast(currentLat, currentLon, APIKey){
         console.log(response);
         var myUVIndex = $("#uvIndex");
         var currentUVIndex = response.current.uvi;
-        console.log(currentUVIndex);
         $("#uvIndex").text("UV Index: " + currentUVIndex);
-        //myUVIndex.append(currentUVIndex);
         colorUVIndex(currentUVIndex, myUVIndex);
-
     });
 }
-
+//the UV index color coded to indicate if conditions are favorable, moderate, or severe
 function colorUVIndex(currentUVIndex, myUVIndex) {
     if (currentUVIndex < 3) {
         $("#uvIndex").css("color", "limegreen");
@@ -68,15 +65,13 @@ function colorUVIndex(currentUVIndex, myUVIndex) {
         //myUVIndex.append(currentUVIndex);
     }
 }
+//future  5-day forecast that displays the date, an icon representation of weather conditions, the temperature, and the humidity
+
 
 
 //search for a city with geolocation api
-
 //city is added to the search history
-//current weather conditions for that city
-//current weather with the city name, the date, an icon representation of weather conditions, the temperature, the humidity, the wind speed, and the UV index
-//the UV index color coded to indicate if conditions are favorable, moderate, or severe
-//future  5-day forecast that displays the date, an icon representation of weather conditions, the temperature, and the humidity
+
 //a city in the search history provides current and future conditions for that city
 
 

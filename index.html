@@ -12,22 +12,26 @@
 <body class="Container">
     <h1>What Is the Weather today?</h1>
     <section class="row">
-        <form class="col 3">
+        <form class="col 2">
             <label for="weatherLocation">Weather Location</label>
             <input type="search" id="weatherLocation">
             <input id="weatherSearch" type="submit" value="search">
         </form>
-        <div class="col 9" id="weatherToday">
+        <div class="col 10" id="weatherToday">
             <h2 id="currentCity"></h2>
             <div id="uvIndex"></div>
         </div>
     
     </section>
     <section class="row">
-        <div class="col 3" id="cityHistory">
+        <div class="col 2" id="cityHistory">
         </div>
-        <div class="col 9" id="weather5DayForcast">
-
+        <div class="col 10" id="weather5DayForcast">
+            <div id="day0"></div>
+            <div id="day1"></div>
+            <div id="day2"></div>
+            <div id="day3"></div>
+            <div id="day4"></div>
         </div>
     </section>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
