@@ -18,7 +18,7 @@ function searchWeatherInCity(event){
         console.log(currentLon);
         //current weather conditions for that city
         //current weather with the city name, the date, an icon representation of weather conditions, 
-        //the temperature, the humidity, the wind speed, and the UV index
+        //the temperature, the humidity, the wind speed
         var currentCity = $("<h2>").text(response.name);
         var currentDate = $("<h3>").text(today);
         var currentIcon = $("<img>").attr("src", "http://openweathermap.org/img/w/" + response.weather[0].icon + ".png");
@@ -43,12 +43,31 @@ function getUVAndForcast(currentLat, currentLon, APIKey){
         method: "GET"
     }).then(function(response) {
         console.log(response);
+        var myUVIndex = $("#uvIndex");
+        var currentUVIndex = response.current.uvi;
+        console.log(currentUVIndex);
+        $("#uvIndex").text("UV Index: " + currentUVIndex);
+        //myUVIndex.append(currentUVIndex);
+        colorUVIndex(currentUVIndex, myUVIndex);
 
     });
 }
-           
 
- 
+function colorUVIndex(currentUVIndex, myUVIndex) {
+    if (currentUVIndex < 3) {
+        $("#uvIndex").css("color", "limegreen");
+        //myUVIndex.append(currentUVIndex);
+    } else if (currentUVIndex >= 3 && currentUVIndex < 6) {
+        $("#uvIndex").css("color", "yellow");
+    } else if (currentUVIndex >= 6 && currentUVIndex < 8) {
+        $("#uvIndex").css("color", "orange");
+    } else if (currentUVIndex >= 8 && currentUVIndex < 10) {
+        $("#uvIndex").css("color", "red");
+    } else if (currentUVIndex >=11) {
+        $("#uvIndex").css("color", "purple");
+        //myUVIndex.append(currentUVIndex);
+    }
+}
 
 
 //search for a city with geolocation api
