@@ -47,8 +47,26 @@ function getUVAndForcast(currentLat, currentLon, APIKey){
         var currentUVIndex = response.current.uvi;
         $("#uvIndex").text("UV Index: " + currentUVIndex);
         colorUVIndex(currentUVIndex, myUVIndex);
+        renderForecast(response)
+        
     });
 }
+
+function renderForecast(response) {
+    var forecast = response.daily;
+    $.each(forecast, function(i, day) {
+        console.log(day);
+        var forecastIcon = $("<img>").attr("src", "http://openweathermap.org/img/w/" + response.daily[i].weather[0].icon + ".png");
+        var forecastTemp = $("<h5>").text("Temperature: " + response.daily[i].temp.day + "°F");
+        var forecastHumidity = $("<p>").text("Humidity: " + response.daily[i].feels_like.humidity + "%");
+        var myForecast = $("#day" + i);
+        myForecast.append(forecastIcon, forecastTemp, forecastHumidity);
+    })
+    
+    //var forcastDate = 
+
+}
+
 //the UV index color coded to indicate if conditions are favorable, moderate, or severe
 function colorUVIndex(currentUVIndex, myUVIndex) {
     if (currentUVIndex < 3) {
