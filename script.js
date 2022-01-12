@@ -1,10 +1,15 @@
 var today = moment().format("dddd, MMMM, D, YYYY");
+var storedCities = getCities();
+$.each(storedCities, function(i, city) {
+    var $button = $("<button>").text(city);
+    $("#cityHistory").append($button);
+})
 //GIVEN a weather dashboard with form input
 function searchWeatherInCity(event){
     event.preventDefault();
     // run the search for weather with city name
     var inputCity = $("#weatherLocation").val().trim();
-    console.log(inputCity);
+
     var APIKey = "d2d9bc8002577dcf660cef71f30ebecb";
     $.ajax({
         url: "https://api.openweathermap.org/data/2.5/weather?q=" + inputCity + "&appid=" + APIKey + "&units=imperial",
@@ -15,7 +20,6 @@ function searchWeatherInCity(event){
         myWeather = $("#weatherToday");
         var currentLat = response.coord.lat;
         var currentLon = response.coord.lon;
-        console.log(currentLon);
         //current weather conditions for that city
         //current weather with the city name, the date, an icon representation of weather conditions, 
         //the temperature, the humidity, the wind speed
@@ -29,10 +33,29 @@ function searchWeatherInCity(event){
 
         myWeather.append(currentCity, currentDate, currentIcon, currentTemp, currentHumidity, currentWindSpeed);
         getUVAndForcast(currentLat, currentLon, APIKey)
-        //store city information
+        var storedCities = getCities();
+        storedCities.unshift(response.name);
+        //create button for input city
+        $.each(storedCities, function(i, city) {
+            var $button = $("<button>").text(city);
+            $("#cityHistory").append($button);
+        })
+     
+        localStorage.setItem("city", JSON.stringify(storedCities));
     
     });
 }
+
+ //store city information
+ function getCities() {
+     var storedCities = JSON.parse(localStorage.getItem("city"));
+     if(storedCities === null) {
+         storedCities = [];
+         return storedCities;
+     }
+     return storedCities;
+ }
+
 //event listener for button
 $("#weatherSearch").on("click", searchWeatherInCity);
     
@@ -52,6 +75,7 @@ function getUVAndForcast(currentLat, currentLon, APIKey){
     });
 }
 
+//future  5-day forecast that displays the date, an icon representation of weather conditions, the temperature, and the humidity
 function renderForecast(response) {
     var forecast = response.daily;
     $.each(forecast, function(i, day) {
@@ -83,7 +107,6 @@ function colorUVIndex(currentUVIndex, myUVIndex) {
         //myUVIndex.append(currentUVIndex);
     }
 }
-//future  5-day forecast that displays the date, an icon representation of weather conditions, the temperature, and the humidity
 
 
 
