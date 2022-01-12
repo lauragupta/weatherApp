@@ -58,7 +58,7 @@ function renderForecast(response) {
         console.log(day);
         var forecastIcon = $("<img>").attr("src", "http://openweathermap.org/img/w/" + response.daily[i].weather[0].icon + ".png");
         var forecastTemp = $("<h5>").text("Temperature: " + response.daily[i].temp.day + "°F");
-        var forecastHumidity = $("<p>").text("Humidity: " + response.daily[i].feels_like.humidity + "%");
+        var forecastHumidity = $("<p>").text("Humidity: " + response.daily[i].humidity + "%");
         var myForecast = $("#day" + i);
         myForecast.append(forecastIcon, forecastTemp, forecastHumidity);
     })
