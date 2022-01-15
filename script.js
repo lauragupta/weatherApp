@@ -12,7 +12,6 @@ function searchWeatherInCity(event){
     event.preventDefault();
     // run the search for weather with city name
     var inputCity = $("#weatherLocation").val().trim();
-    console.log(inputCity);
     getAndRenderCurrentWeather(inputCity);
     var storedCities = getCities();
     storedCities.unshift(inputCity);
@@ -40,9 +39,7 @@ function searchWeatherInCity(event){
  function searchCityAgain(event){
     event.preventDefault();
     var $clickedButton = $(event.target);
-    console.log($clickedButton);
     var inputCity = $clickedButton[0].innerHTML;
-    console.log(inputCity);
     getAndRenderCurrentWeather(inputCity);
  }
 
@@ -57,7 +54,6 @@ function getAndRenderCurrentWeather(inputCity) {
         url: "https://api.openweathermap.org/data/2.5/weather?q=" + inputCity + "&appid=" + APIKey + "&units=imperial",
         method: "GET"
     }).then(function(response) {
-        console.log(response);
         var currentLat = response.coord.lat;
         var currentLon = response.coord.lon;
         //current weather conditions for that city
@@ -81,9 +77,7 @@ function getUVAndForcast(currentLat, currentLon) {
         url: "https://api.openweathermap.org/data/2.5/onecall?lat=" + currentLat + "&lon=" + currentLon + "&exclude=minutely&appid=" + APIKey + "&units=imperial",
         method: "GET"
     }).then(function(response) {
-        console.log(response);
         var currentUVIndex = response.current.uvi;
-        console.log(currentUVIndex);
         var $uvIndex = $("<p id='uvIndex'>").html("UV Index: " + currentUVIndex);
         $("#weatherToday").append($uvIndex);
         colorUVIndex(currentUVIndex);
@@ -96,7 +90,6 @@ function getUVAndForcast(currentLat, currentLon) {
 function renderForecast(response) {
     var forecast = response.daily;
     $.each(forecast, function(i, day) {
-        console.log(day);
         var forecastDate = moment.unix(response.daily[i].dt).format("MMM Do, YYYY");
         var $forecastDate = $("<h4>").text(forecastDate);
         var $forecastIcon = $("<img>").attr("src", "http://openweathermap.org/img/w/" + response.daily[i].weather[0].icon + ".png");
