@@ -1,6 +1,5 @@
 var today = moment().format("dddd, MMMM, D, YYYY");
 var APIKey = "d2d9bc8002577dcf660cef71f30ebecb";
-var myWeather = $("#weatherToday");
 var storedCities = getCities();
 
 $.each(storedCities, function(i, city) {
@@ -37,6 +36,7 @@ function searchWeatherInCity(event){
      return storedCities;
  }
 
+ //a city in the search history provides current and future conditions for that city
  function searchCityAgain(event){
     event.preventDefault();
     var $clickedButton = $(event.target);
@@ -47,7 +47,7 @@ function searchWeatherInCity(event){
  }
 
 function getAndRenderCurrentWeather(inputCity) {
-    $("#weatherToday").empty();
+    //$("#weatherToday").empty();
     $("#day0").empty();
     $("#day1").empty();
     $("#day2").empty();
@@ -63,14 +63,10 @@ function getAndRenderCurrentWeather(inputCity) {
         //current weather conditions for that city
         //current weather with the city name, the date, an icon representation of weather conditions, 
         //the temperature, the humidity, the wind speed
-        var $currentCity = $("<h2>").text(response.name);
-        var $currentDate = $("<h3>").text(today);
-        var $currentIcon = $("<img>").attr("src", "http://openweathermap.org/img/w/" + response.weather[0].icon + ".png");
-        var $currentTemp = $("<h3>").text("Temperature: " + response.main.temp + "°F");
-        var $currentHumidity = $("<p>").text("Humidity: " + response.main.humidity + "%");
-        var $currentWindSpeed = $("<p>").text("Wind Speed " + response.wind.speed + " MPH");
-        
-        myWeather.append($currentCity, $currentDate, $currentIcon, $currentTemp, $currentHumidity, $currentWindSpeed);
+        var weatherTodayHtml = `<h2>${response.name}</h2><h3>${today}</h3><img src="http://openweathermap.org/img/w/${response.weather[0].icon}.png"/><h3>Temperature: ${response.main.temp}°F</h3><p>Humidity: ${response.main.humidity}%</p><p>Wind Speed ${response.wind.speed} MPH</p>`
+
+        var $weatherToday = $("#weatherToday");
+        $weatherToday.html(weatherTodayHtml);
         getUVAndForcast(currentLat, currentLon);
         return inputCity;
     });
@@ -86,11 +82,12 @@ function getUVAndForcast(currentLat, currentLon) {
         method: "GET"
     }).then(function(response) {
         console.log(response);
-        var myUVIndex = $("#uvIndex");
         var currentUVIndex = response.current.uvi;
-        $("#uvIndex").text("UV Index: " + currentUVIndex);
-        colorUVIndex(currentUVIndex, myUVIndex);
-        renderForecast(response)
+        console.log(currentUVIndex);
+        var $uvIndex = $("<p id='uvIndex'>").html("UV Index: " + currentUVIndex);
+        $("#weatherToday").append($uvIndex);
+        colorUVIndex(currentUVIndex);
+        renderForecast(response);
         
     });
 }
@@ -112,7 +109,7 @@ function renderForecast(response) {
 }
 
 //the UV index color coded to indicate if conditions are favorable, moderate, or severe
-function colorUVIndex(currentUVIndex, myUVIndex) {
+function colorUVIndex(currentUVIndex) {
     if (currentUVIndex < 3) {
         $("#uvIndex").css("color", "limegreen");
     } else if (currentUVIndex >= 3 && currentUVIndex < 6) {
@@ -125,10 +122,6 @@ function colorUVIndex(currentUVIndex, myUVIndex) {
         $("#uvIndex").css("color", "purple");
     }
 }
-
-
-//a city in the search history provides current and future conditions for that city
-
 
     //event listener for button
     $("#cityHistory").on("click", searchCityAgain);
